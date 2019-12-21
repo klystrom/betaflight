@@ -377,6 +377,14 @@ void writeServos(void)
         break;
     }
 
+    // If Paralyze Mode triggered, kill all servo signals completely
+    if (getArmingDisableFlags() & ARMING_DISABLED_PARALYZE)
+    {
+    	for (int j = 0; j <MAX_SUPPORTED_SERVOS; j++){
+    		servo[j] = 0;
+    	}
+    }
+
     // Two servos for SERVO_TILT, if enabled
     if (featureIsEnabled(FEATURE_SERVO_TILT) || getMixerMode() == MIXER_GIMBAL) {
         updateGimbalServos(servoIndex);
