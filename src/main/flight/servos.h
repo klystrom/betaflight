@@ -125,6 +125,7 @@ typedef struct servoConfig_s {
     uint16_t servo_lowpass_freq;            // lowpass servo filter frequency selection; 1/1000ths of loop freq
     uint8_t tri_unarmed_servo;              // send tail servo correction pulses even when unarmed
     uint8_t channelForwardingStartChannel;
+    uint8_t no_pulse_on_paralyze;			// Disable upon entering paralyze mode
 } servoConfig_t;
 
 PG_DECLARE(servoConfig_t, servoConfig);

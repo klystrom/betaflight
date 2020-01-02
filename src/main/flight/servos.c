@@ -65,6 +65,7 @@ void pgResetFn_servoConfig(servoConfig_t *servoConfig)
     servoConfig->tri_unarmed_servo = 1;
     servoConfig->servo_lowpass_freq = 0;
     servoConfig->channelForwardingStartChannel = AUX1;
+    servoConfig->no_pulse_on_paralyze = 0;
 
     for (unsigned servoIndex = 0; servoIndex < MAX_SUPPORTED_SERVOS; servoIndex++) {
         servoConfig->dev.ioTags[servoIndex] = timerioTagGetByUsage(TIM_USE_SERVO, servoIndex);
@@ -377,8 +378,8 @@ void writeServos(void)
         break;
     }
 
-    // If Paralyze Mode triggered, kill all servo signals completely
-    if (getArmingDisableFlags() & ARMING_DISABLED_PARALYZE)
+    // If Paralyze Mode triggered and no_pulse_on_paralyze is set, kill all servo signals completely
+    if ((getArmingDisableFlags() & ARMING_DISABLED_PARALYZE) && servoConfig()->no_pulse_on_paralyze);
     {
     	for (int j = 0; j <MAX_SUPPORTED_SERVOS; j++){
     		servo[j] = 0;
